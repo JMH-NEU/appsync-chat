@@ -1,0 +1,10 @@
+type Message @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String!
+  user: User! @connection
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String!
+}

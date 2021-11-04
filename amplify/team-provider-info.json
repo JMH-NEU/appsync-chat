@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-datastorechat-staging-173101-authRole",
+      "UnauthRoleArn": "arn:aws:iam::602035407348:role/amplify-datastorechat-staging-173101-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::602035407348:role/amplify-datastorechat-staging-173101-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-datastorechat-staging-173101-deployment",
+      "UnauthRoleName": "amplify-datastorechat-staging-173101-unauthRole",
+      "StackName": "amplify-datastorechat-staging-173101",
+      "StackId": "arn:aws:cloudformation:us-east-2:602035407348:stack/amplify-datastorechat-staging-173101/fb1feb70-3d94-11ec-a9c7-0a6700aba846",
+      "AmplifyAppId": "d3atysspyeowna"
+    }
+  }
+}
