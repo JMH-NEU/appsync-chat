@@ -5,17 +5,20 @@ import { User } from "./models";
 
 export const Chat = ({ user }) => {
   const [messageInput, setMessageInput] = useState("");
-  const [messages, setMessages] = useState([{ name: "", content: "" }]);
-  const messagesRef = useRef([{ name: "", content: "" }]);
+  const [messages, setMessages] = useState([]);
 
-  const subscription = DataStore.observe(Message).subscribe((msg) => {
-    // messagesRef.current = [
-    //   ...messagesRef.current,
-    //   { name: msg.element.user.username, content: msg.element.content },
-    // ];
-    // setMessages(messagesRef.current);
-    console.log(msg);
-  });
+  useEffect(() => {
+    const subscription = DataStore.observeQuery(Message).subscribe(
+      (snapshot) => {
+        setMessages([...snapshot.items]);
+      }
+    );
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(messages);
+  // }, [messages]);
 
   const handleSendMessage = async () => {
     await DataStore.save(new Message({ user: user, content: messageInput }));
@@ -24,10 +27,12 @@ export const Chat = ({ user }) => {
 
   return (
     <div className="w-96 flex flex-col">
-      <div className="pl-2">
-        {messages.forEach((message) => (
-          <div className="flex justify-center">
-            <div className="mr-auto text-pink-400">{message.name}</div>
+      <div className="pl-2 flex-grow w-full">
+        {messages.map((message) => (
+          <div className="flex justify-center" key={message.id}>
+            <div className="mr-auto text-pink-400">
+              {message.user?.username}
+            </div>
             <div className="text-gray-600">{message.content}</div>
           </div>
         ))}
