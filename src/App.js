@@ -28,7 +28,7 @@ function App() {
         <div className="w-96 h-28 bg-green-300 flex justify-around items-center rounded-md">
           <div>
             <input
-              className=" bg-white font-semibold text-green-300 rounded-md pl-1"
+              className=" bg-white font-semibold text-pink-400 rounded-md pl-1"
               placeholder="Full Name"
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}

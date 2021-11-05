@@ -6,19 +6,34 @@ import { User } from "./models";
 export const Chat = ({ user }) => {
   const [messageInput, setMessageInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const messageRef = useRef([]);
+
+  const setSubscription = () => {
+    const subscription = DataStore.observe(Message).subscribe(async (event) => {
+      console.log(event);
+      if (
+        messageRef.current.filter((message) => message.id === event.element.id)
+          .length > 0
+      )
+        return;
+      const messageUser = await DataStore.query(
+        User,
+        event.element.messageUserId
+      );
+      const { content, id } = event.element;
+      messageRef.current = [
+        ...messageRef.current,
+        { content, id, user: messageUser },
+      ];
+      setMessages(messageRef.current);
+    });
+    return subscription;
+  };
 
   useEffect(() => {
-    const subscription = DataStore.observeQuery(Message).subscribe(
-      (snapshot) => {
-        setMessages([...snapshot.items]);
-      }
-    );
+    const subscription = setSubscription();
     return () => subscription.unsubscribe();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(messages);
-  // }, [messages]);
 
   const handleSendMessage = async () => {
     await DataStore.save(new Message({ user: user, content: messageInput }));
